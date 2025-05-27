@@ -1,6 +1,6 @@
-FROM python:3.9-slim
+COPY src/alignment.py src/requirements.txt ./FROM python:3.9-slim
 WORKDIR /app
-COPY alignment.py requirements.txt ./
+COPY src/alignment.py src/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080
 CMD ["python", "alignment.py"]
