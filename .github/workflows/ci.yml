@@ -20,11 +20,15 @@ jobs:
         run: |
           pip install -r src/requirements.txt pytest
           pip install -r src/requirements.txt pytest
+          
       - name: Smoke test
+        env:
+          PYTHONPATH: src
         run: |
           python - << 'TEST_EOF'
           from alignment import compute_alignment_score
           assert 0 <= compute_alignment_score("test") <= 1
           TEST_EOF
+          
       - name: Build Docker image
         run: docker build -t dairymuffin/caa:ci-test .
