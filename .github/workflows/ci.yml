@@ -12,19 +12,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+      
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install -r src/requirements.txt pytest
-          pip install -r src/requirements.txt pytest
+          
       - name: Smoke test
+        env:
+          PYTHONPATH: src
         run: |
           python - << 'TEST_EOF'
           from alignment import compute_alignment_score
           assert 0 <= compute_alignment_score("test") <= 1
           TEST_EOF
+          
       - name: Build Docker image
         run: docker build -t dairymuffin/caa:ci-test .
