@@ -23,6 +23,7 @@ jobs:
       - name: Smoke test
         run: |
           python - << 'TEST_EOF'
+          PYTHONPATH=src python - << 'TEST_EOF'
           from alignment import compute_alignment_score
           assert 0 <= compute_alignment_score("test") <= 1
           TEST_EOF
